@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace APBD10.PostModels;
 
 public class PostProductModel
@@ -7,6 +9,5 @@ public class PostProductModel
     public decimal productWidth { get; set; }
     public decimal productHeight { get; set; }
     public decimal productDepth { get; set; }
-    
     public List<int> productCategories { get; set; }
 }

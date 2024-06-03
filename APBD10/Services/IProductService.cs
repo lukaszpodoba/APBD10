@@ -13,8 +13,38 @@ public interface IProductService
 
 public class ProductService(DatabaseContext context) : IProductService
 {
+    public void Validation(PostProductModel productData)
+    {
+        if (string.IsNullOrWhiteSpace(productData.productName))
+        {
+            throw new BadRequestException("Product name cannot be empty");
+        }
+
+        if (productData.productWeight is <= 0 or > 999.99m)
+        {
+            throw new BadRequestException("Product weight must be greater than zero and less than 999.99.");
+        }
+
+        if (productData.productWidth is <= 0 or > 999.99m)
+        {
+            throw new BadRequestException("Width of the product must be greater than zero and less than 999.99.");
+        }
+
+        if (productData.productHeight is <= 0 or > 999.99m)
+        {
+            throw new BadRequestException("Height of the product must be greater than zero and less than 999.99.");
+        }
+
+        if (productData.productDepth is <= 0 or > 999.99m)
+        {
+            throw new BadRequestException("Depth of the product must be greater than zero and less than 999.99.");
+        }
+    }
+    
     public async Task<int> AddProductAsync(PostProductModel product)
     {
+        Validation(product);
+        
         var result = new Product
         {
             ProductName = product.productName,
